@@ -1,13 +1,18 @@
 // server/index.js
 
 const express = require('express');
-const { connectDB, sequelize } = require('./database/database.js'); // 1. Importar
-require('./models/Post.model.js'); // 2. Importar el modelo para que se registre
+const cors = require('cors'); // 1. Importar cors
+const { connectDB, sequelize } = require('./database/database.js');
+require('./models/Post.model.js');
 
 const postRoutes = require('./routes/posts.routes.js');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// 2. Usar el middleware de cors
+// Esto debe ir ANTES de las rutas de la API
+app.use(cors()); 
 
 app.use(express.json());
 app.use('/api/posts', postRoutes);
