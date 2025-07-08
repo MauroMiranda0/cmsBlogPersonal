@@ -1,23 +1,21 @@
-// 1. Importar Express
+// server/index.js
+
 const express = require('express');
+// 1. Importar las rutas de posts
+const postRoutes = require('./routes/posts.routes.js');
 
-// 2. Crear una instancia de la aplicación Express
 const app = express();
-
-// 3. Definir el puerto
-// Usamos el puerto 5000 para el backend. El frontend (React) usará por defecto el 3000.
-// process.env.PORT es para cuando despleguemos el proyecto en un servicio de hosting.
 const PORT = process.env.PORT || 5000;
 
-// 4. Crear una ruta de prueba
-// Cuando alguien visite la raíz de nuestro servidor (http://localhost:5000/),
-// se ejecutará esta función.
-app.get('/', (req, res) => {
-  // req = request (petición), res = response (respuesta)
-  res.send('¡Hola Mundo desde el servidor de mi CMS!');
-});
+// 2. Middlewares
+// Este middleware permite a Express entender y parsear JSON enviado en el body de las peticiones
+app.use(express.json());
 
-// 5. Poner el servidor a escuchar peticiones
+// 3. Usar las rutas
+// Le decimos a nuestra app que use el router de posts para cualquier petición
+// que comience con '/api/posts'
+app.use('/api/posts', postRoutes);
+
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
