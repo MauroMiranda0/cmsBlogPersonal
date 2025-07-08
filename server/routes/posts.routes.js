@@ -1,13 +1,15 @@
 // server/routes/posts.routes.js
-
 const { Router } = require('express');
-// 1. Importar el controlador
-const { getPosts } = require('../controllers/posts.controller.js');
+const { getPosts, createPost, getPostById, updatePost, deletePost } = require('../controllers/posts.controller.js');
 
 const router = Router();
 
-// 2. Usar el controlador en la ruta
-// Cuando llegue una petición GET a '/', se ejecutará la función getPosts
 router.get('/', getPosts);
+router.post('/', createPost);
+
+// Rutas que requieren un ID específico
+router.get('/:id', getPostById);
+router.put('/:id', updatePost);
+router.delete('/:id', deletePost);
 
 module.exports = router;
